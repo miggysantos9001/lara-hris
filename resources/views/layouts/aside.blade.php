@@ -42,7 +42,7 @@
                             </ul>
                         </li>
                         <li class="">
-                            <a href="#"><i class="fa fa-power-off"></i><span>Logout</span></a>
+                            <a href="{{ route('gawas') }}"><i class="fa fa-power-off"></i><span>Logout</span></a>
                         </li>
                     </ul>
                 </nav>

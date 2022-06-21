@@ -13,13 +13,11 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-// Route::get('/', function () {
-//     return view('login');
-// });
+Route::get('/','LoginController@index')->name('login1');
+Route::post('login-new','LoginController@store')->name('pasok');
+Route::get('logout','LoginController@logout')->name('gawas');
 
-// Route::get('/dashboard', function () {
-//     return view('dashboard');
-// });
+Route::get('/dashboard','DashboardController@index')->name('dashboard.index');
 
 Route::resource('/banks','BankController');
 Route::get('/banks/delete/{id}',"BankController@delete")->name('banks.delete');
