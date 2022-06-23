@@ -47,19 +47,3 @@ Route::resource('/violations','ViolationController');
 Route::get('/violations/delete/{id}',"ViolationController@delete")->name('violations.delete');
 
 Route::resource('/employees','EmployeeController');
-
-// Route::get('/leaves', function () {
-//     return view('admin.utilities.leaves.index');
-// });
-
-// Route::get('/requirements', function () {
-//     return view('admin.utilities.requirements.index');
-// });
-
-// Route::get('/sanctions', function () {
-//     return view('admin.utilities.sanctions.index');
-// });
-
-// Route::get('/violations', function () {
-//     return view('admin.utilities.violations.index');
-// });

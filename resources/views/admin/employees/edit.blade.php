@@ -13,7 +13,7 @@
                     <li class="nav-item"><a class="nav-link" data-toggle="tab" href="#preferences">Salary Information</a></li>
                 </ul>
             </div>
-            {!! Form::open(['method'=>'POST','action'=>'EmployeeController@store','files' => true]) !!}
+            {!! Form::model($employee,['method'=>'PATCH','action'=>['EmployeeController@update',$employee->id],'files' => true]) !!}
             <div class="tab-content">
                 <div class="tab-pane active" id="Settings">
                     <div class="body">
@@ -21,7 +21,7 @@
                         <div class="media">
                             <div class="media-left m-r-15">
                                 {{-- <img src="{{ asset('public/assets/images/user.png') }}" class="user-photo media-object" alt="User"> --}}
-                                <img id="previewHolder" src="{{ asset('public/assets/images/user.png') }}" alt="Upload Photo" width="140px" height="140px" class=""/>
+                                <img id="previewHolder" src="{{ asset('public/photo/'.$employee->photo) }}" alt="Upload Photo" width="140px" height="140px" class=""/>
                             </div>
                             <div class="media-body">
                                 <p>Upload your photo.<span style="color:red;">*</span></p>
@@ -71,11 +71,19 @@
                                     {!! Form::label('Gender') !!}<span style="color:red;">*</span>
                                     <div>
                                         <label class="fancy-radio">
+                                            @if($employee->gender == 'male')
                                             <input name="gender" value="male" type="radio" checked="checked">
+                                            @else
+                                            <input name="gender" value="male" type="radio">
+                                            @endif
                                             <span><i></i>Male</span>
                                         </label>
                                         <label class="fancy-radio">
+                                            @if($employee->gender == 'female')
+                                            <input name="gender" value="female" type="radio" checked="checked">
+                                            @else
                                             <input name="gender" value="female" type="radio">
+                                            @endif
                                             <span><i></i>Female</span>
                                         </label>
                                     </div>
@@ -104,46 +112,46 @@
                             <div class="col-lg-6 col-md-12">
                                 <div class="form-group"> 
                                     {!! Form::label('Date Hired') !!}    
-                                    {!! Form::date('date_hired',null,['class'=>'form-control form-control-sm']) !!}       
+                                    {!! Form::date('date_hired',$employee->emp_geninfo->date_hired,['class'=>'form-control form-control-sm']) !!}       
                                 </div>
                                 <div class="form-group"> 
                                     {!! Form::label('Date Separated') !!}    
-                                    {!! Form::date('date_separated',null,['class'=>'form-control form-control-sm']) !!}       
+                                    {!! Form::date('date_separated',$employee->emp_geninfo->date_separated,['class'=>'form-control form-control-sm']) !!}       
                                 </div>
                                 <div class="form-group"> 
                                     {!! Form::label('Department') !!}    
-                                    {!! Form::select('department_id',$departments,null,['class'=>'select2 form-control form-control-sm','placeholder'=>'-- Select One --','style'=>'width:100%;']) !!} 
+                                    {!! Form::select('department_id',$departments,$employee->emp_geninfo->department_id,['class'=>'select2 form-control form-control-sm','placeholder'=>'-- Select One --','style'=>'width:100%;']) !!} 
                                 </div>
                                 <div class="form-group"> 
                                     {!! Form::label('Position') !!}    
-                                    {!! Form::select('position_id',$positions,null,['class'=>'select2 form-control form-control-sm','placeholder'=>'-- Select One --','style'=>'width:100%;']) !!} 
+                                    {!! Form::select('position_id',$positions,$employee->emp_geninfo->position_id,['class'=>'select2 form-control form-control-sm','placeholder'=>'-- Select One --','style'=>'width:100%;']) !!} 
                                 </div>
                                 <div class="form-group"> 
                                     {!! Form::label('Official Time - In') !!}    
-                                    {!! Form::time('time_in',null,['class'=>'form-control form-control-sm']) !!}       
+                                    {!! Form::time('time_in',$employee->emp_schedule->time_in,['class'=>'form-control form-control-sm']) !!}       
                                 </div>
                                 <div class="form-group"> 
                                     {!! Form::label('Official Time - Out') !!}    
-                                    {!! Form::time('time_out',null,['class'=>'form-control form-control-sm']) !!}       
+                                    {!! Form::time('time_out',$employee->emp_schedule->time_out,['class'=>'form-control form-control-sm']) !!}       
                                 </div>
                             </div>
                             <div class="col-lg-6 col-md-12">
                                 <div style="margin-top: 6px;"></div>
                                 <div class="form-group"> 
                                     {!! Form::label('Branch') !!}    
-                                    {!! Form::select('branch_id',$branches,null,['class'=>'select2 form-control form-control-sm','placeholder'=>'-- Select One --','style'=>'width:100%;']) !!} 
+                                    {!! Form::select('branch_id',$branches,$employee->emp_geninfo->branch_id,['class'=>'select2 form-control form-control-sm','placeholder'=>'-- Select One --','style'=>'width:100%;']) !!} 
                                 </div>
                                 <div class="form-group"> 
                                     {!! Form::label('Employment Category') !!}    
-                                    {!! Form::select('category_id',$categories,null,['class'=>'select2 form-control form-control-sm','placeholder'=>'-- Select One --','style'=>'width:100%;']) !!} 
+                                    {!! Form::select('category_id',$categories,$employee->emp_geninfo->category_id,['class'=>'select2 form-control form-control-sm','placeholder'=>'-- Select One --','style'=>'width:100%;']) !!} 
                                 </div>
                                 <div class="form-group"> 
                                     {!! Form::label('Employment Status') !!}    
-                                    {!! Form::select('status_id',$status,null,['class'=>'select2 form-control form-control-sm','placeholder'=>'-- Select One --','style'=>'width:100%;']) !!} 
+                                    {!! Form::select('status_id',$status,$employee->emp_geninfo->status_id,['class'=>'select2 form-control form-control-sm','placeholder'=>'-- Select One --','style'=>'width:100%;']) !!} 
                                 </div>
                                 <div class="form-group"> 
                                     {!! Form::label('Restday') !!}    
-                                    {!! Form::select('restday_id[]',$weekdays,null,['class'=>'select2 form-control form-control-sm','multiple','style'=>'width:100%;']) !!} 
+                                    {!! Form::select('restday_id[]',$weekdays,$employee->emp_restday()->pluck('weekday_id','weekday_id'),['class'=>'select2 form-control form-control-sm','multiple','style'=>'width:100%;']) !!} 
                                 </div>
                             </div>
                         </div>
@@ -158,15 +166,15 @@
                                     <div class="col-lg-6 col-md-12">
                                         <div class="form-group"> 
                                             {!! Form::label('Bank') !!}    
-                                            {!! Form::select('bank_id',$banks,null,['class'=>'select2 form-control form-control-sm','placeholder'=>'-- Select One --','style'=>'width:100%;']) !!} 
+                                            {!! Form::select('bank_id',$banks,$employee->emp_salinfo->bank_id,['class'=>'select2 form-control form-control-sm','placeholder'=>'-- Select One --','style'=>'width:100%;']) !!} 
                                         </div>
                                         <div class="form-group"> 
                                             {!! Form::label('Account #') !!}    
-                                            {!! Form::text('account_number',null,['class'=>'form-control form-control-sm']) !!} 
+                                            {!! Form::text('account_number',$employee->emp_salinfo->account_number,['class'=>'form-control form-control-sm']) !!} 
                                         </div>
                                         <div class="form-group"> 
                                             {!! Form::label('Salary') !!}    
-                                            {!! Form::text('salary','0.00',['class'=>'form-control form-control-sm']) !!} 
+                                            {!! Form::text('salary',$employee->emp_salinfo->salary,['class'=>'form-control form-control-sm']) !!} 
                                         </div>
                                     </div>
                                     <div class="col-lg-6 col-md-12">
@@ -179,7 +187,7 @@
                 </div>
             </div>
             <div class="card-footer">
-                <button type="submit" class="btn btn-primary"><i class="fa fa-save"></i> Save Entry</button>
+                <button type="submit" class="btn btn-primary"><i class="fa fa-save"></i> Update Entry</button>
                 <a href="{{ route('employees.index') }}" class="btn btn-secondary"><i class="fa fa-home"></i> Back to Index</a>
             </div>
             {!! Form::close() !!}

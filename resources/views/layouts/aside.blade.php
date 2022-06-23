@@ -21,11 +21,10 @@
                             <a href="#"><i class="fa fa-dashboard"></i><span>Dashboard</span></a>
                         </li>
                         <li class="">
-                            <a href="#" class="has-arrow"><i class="fa fa-users"></i><span>Students</span></a>
+                            <a href="#" class="has-arrow"><i class="fa fa-users"></i><span>Employees</span></a>
                             <ul>
-                                <li><a href="#">View List</a></li>
-                                <li><a href="#">View Currently Enrolled</a></li>
-                                <li><a href="#">Create Entry</a></li>
+                                <li><a href="{{ route('employees.index') }}">View List</a></li>
+                                <li><a href="{{ route('employees.create') }}">Create Entry</a></li>
                             </ul>
                         </li>
                         <li class="">
